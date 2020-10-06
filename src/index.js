@@ -5,7 +5,7 @@ module.exports = function toReadable(number) {
 }
 
 function firstTwoNums(item, index, array) {
-    let irregular = Number(array[1]) > 1 ? false : true;
+    let irregular = (Number(array[1]) > 1 && array[1]) ? false : true;
     if (irregular) {
         if (index == 1) return ''
         else {
@@ -22,6 +22,13 @@ function firstTwoNums(item, index, array) {
                             return irregularBasicNum(item) + 'een';
                     }
                 case '0':
+                    return basisNum(item);
+            }
+            switch (item) {
+                case '0':
+                    return 'zero'
+
+                default:
                     return basisNum(item);
             }
         }
