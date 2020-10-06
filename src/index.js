@@ -1,7 +1,7 @@
 module.exports = function toReadable(number) {
     return number.toString().split('').reverse().map((item, index, array) => {
         return index < 2 ? firstTwoNums(item, index, array) : otherNums(basisNum(item), index, array);
-    }).reverse().join(' ')
+    }).reverse().join(' ').reduceWhiteSpace().trim();
 }
 
 function firstTwoNums(item, index, array) {
@@ -9,7 +9,21 @@ function firstTwoNums(item, index, array) {
     if (irregular) {
         if (index == 1) return ''
         else {
-            //irregular
+            switch (array[1]) {
+                case '1':
+                    switch (item) {
+                        case '0':
+                            return 'ten';
+                        case '1':
+                            return 'eleven';
+                        case '2':
+                            return 'twelve';
+                        default:
+                            return irregularBasicNum(item) + 'een';
+                    }
+                case '0':
+                    return basisNum(item);
+            }
         }
     } else {
         switch (index) {
@@ -18,9 +32,11 @@ function firstTwoNums(item, index, array) {
             case 1:
                 switch (item) {
                     case '1':
-                        return 'ten';
+                        return '';
                     case '2':
                         return 'twenty';
+                    case '4':
+                        return 'forty';
                     default:
                         return irregularBasicNum(item) + 'y';
                 }
@@ -73,7 +89,7 @@ function irregularBasicNum(item) {
         case '3':
             return 'thirt';
         case '4':
-            return 'fort';
+            return 'fourt';
         case '5':
             return 'fift';
         case '6':
@@ -88,3 +104,7 @@ function irregularBasicNum(item) {
             break;
     }
 }
+
+String.prototype.reduceWhiteSpace = function() {
+    return this.replace(/\s+/g, ' ');
+};
